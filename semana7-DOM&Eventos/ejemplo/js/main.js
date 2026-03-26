@@ -1,0 +1,58 @@
+const productos= [
+    {
+        id: 1, 
+        nombre: "televisor", 
+        precio: 5000
+    },
+    {
+        id: 2, 
+        nombre: "lavarropas", 
+        precio: 8000
+    },
+    {
+        id: 3, 
+        nombre: "microondas", 
+        precio: 2000
+    },
+    {
+        id: 4, 
+        nombre: "secadora", 
+        precio: 4000
+    },
+    {
+        id: 5, 
+        nombre: "cocina", 
+        precio: 13000
+    },
+]
+
+let productsContainer = document.getElementById("products-container")
+let cartProducts = []
+
+function renderProductos(productsArray) {
+    productsArray.forEach(producto => {
+        const card = document.createElement("div")
+        card.innerHTML = `<h3>${producto.nombre}</h3>
+                          <h4>$${producto.precio}</h4>
+                          <button class="productoAgregar" id="${producto.id}">Agregar</button>`
+        productsContainer.appendChild(card)
+    })
+    agregarAlCarrito()
+}
+
+renderProductos(productos)
+
+function agregarAlCarrito() {
+    addButton = document.querySelectorAll(".productoAgregar")
+    addButton.forEach(button => {
+        button.onclick = (e) => {
+            const productId = e.currentTarget.id
+            const selectedProduct = productos.find(producto => producto.id == productId)
+
+            cartProducts.push(selectedProduct)
+            console.log(cartProducts)
+
+            localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
+        }
+    })
+}
